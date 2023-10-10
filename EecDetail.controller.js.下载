@@ -1,0 +1,449 @@
+var dataArray;
+
+function getEecDetailData(zzbh, type) {
+	var date = {
+		zzbh: zzbh,
+		type: type
+	};
+	$.ajax({
+		data: date,
+		type: "get",
+		url: "https://app.zjzwfw.gov.cn/zjzwfwwyw/interface/getJzyqyzzDetail.do",
+		//https://app.zjzwfw.gov.cn/zjzwfwwyw/interface/getJzyqyzzDetail.do?zzbh=E233004924&type=10
+
+		timeout: 20000, //超时时间设置，单位毫秒
+		async: false,
+		success: function(data) {
+            console.log(data);
+			var list = '';
+			var arraylist = '';
+			if(data.length > 0) { //有数据
+				list = JSON.parse(data);
+				dataArray = [];				
+				dataArray = list;
+			} else { //无数据
+				dataArray = [];
+				mui.alert("暂无数据");
+			}
+			if(type == 0) {
+				document.getElementById("content0").style.display = "";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+                document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+				document.getElementById("zsmc").innerHTML = dataArray.baseInfo.zzname;
+				document.getElementById("qymc").innerHTML = dataArray.baseInfo.complany;
+				document.getElementById("zcdz").innerHTML = dataArray.baseInfo.zcdz;
+				document.getElementById("yyzzh").innerHTML = dataArray.baseInfo.tyshxydm;
+				document.getElementById("fddbr").innerHTML = dataArray.baseInfo.frdb;
+				document.getElementById("zczb").innerHTML = dataArray.baseInfo.zczb + '万元';
+				document.getElementById("jjxz").innerHTML = dataArray.baseInfo.jjlx;
+				document.getElementById("zsbh").innerHTML = dataArray.baseInfo.zzbh;
+				document.getElementById("yxq").innerHTML = dataArray.baseInfo.yxqjz;
+				document.getElementById("fzjg").innerHTML = dataArray.baseInfo.fzjg;
+				document.getElementById("yxqqs").innerHTML = dataArray.baseInfo.yxqqs;
+                //document.getElementById("fzsj").innerHTML = dataArray.baseInfo.fzsj;
+				if(dataArray.majorInfo.length > 0) { //有数据
+					arraylist = [];
+					arraylist = dataArray.majorInfo;
+				} else { //无数据
+					arraylist = [];
+				}
+				if(arraylist.length > 0) { //有数据
+					var innerhtml = '';
+					for(var i = 0; i < arraylist.length; i++) {
+						var zzdj = arraylist[i].zzdj;
+						var vtradetypename = arraylist[i].tradetypename;
+						var vtradetypeboundname = arraylist[i].tradetypeboundname;
+						innerhtml = innerhtml + "<li class='textstr'>" + vtradetypeboundname + vtradetypename + " " + zzdj + "</li>";
+					}
+					document.getElementById('zzxx').innerHTML = innerhtml;
+				}
+			} else if(type == 1) {
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+				document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+                document.getElementById("content10").style.display = "none";
+			  	document.getElementById("content11").style.display = "none";
+			  	document.getElementById("content12").style.display = "none";
+				document.getElementById("con1-zsmc").innerHTML = dataArray.zzname;
+				document.getElementById("con1-dwmc").innerHTML = dataArray.qymc;
+				document.getElementById("con1-dwdz").innerHTML = dataArray.dwdz;
+				document.getElementById("con1-zsbh").innerHTML = dataArray.zzbh;
+				document.getElementById("con1-zyfzr").innerHTML = dataArray.zyfzr;
+				document.getElementById("con1-jjlx").innerHTML = dataArray.jjlx;
+				document.getElementById("con1-xkfw").innerHTML = dataArray.xkfw;
+				document.getElementById("con1-fzjg").innerHTML = dataArray.bzdw;
+				document.getElementById("con1-fzsj").innerHTML = dataArray.fzsj;
+				document.getElementById("con1-yxq").innerHTML = dataArray.yxqqs + "至" + dataArray.yxqjz;
+				
+			} else if(type == 2) {
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+                document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+				
+				document.getElementById("con2-zsmc").innerHTML = dataArray.baseInfo.zzname;
+				document.getElementById("con2-xm").innerHTML = dataArray.baseInfo.name;
+				document.getElementById("con2-xb").innerHTML = dataArray.baseInfo.sex;
+				document.getElementById("con2-csny").innerHTML = dataArray.baseInfo.birthday;
+				document.getElementById("con2-qymc").innerHTML = dataArray.baseInfo.complany;
+				document.getElementById("con2-zw").innerHTML = dataArray.baseInfo.jjlx;
+				document.getElementById("con2-jszc").innerHTML = dataArray.baseInfo.zzsabh;
+				document.getElementById("con2-zsbh").innerHTML = dataArray.baseInfo.zzbh;
+				document.getElementById("con2-fzjg").innerHTML = dataArray.baseInfo.fzjg;
+				var vidcard = dataArray.baseInfo.idcard;
+				document.getElementById("con2-sfzh").innerHTML = vidcard.substring(0, 1) + "****************" + vidcard.substring(vidcard.length - 1, vidcard.length);
+
+				if(dataArray.majorInfo.length > 0) { //有数据
+					arraylist = [];
+					arraylist = dataArray.majorInfo;
+				} else { //无数据
+					arraylist = [];
+				}
+				if(arraylist.length > 0) { //有数据
+					var innerhtml = '';
+					for(var i = 0; i < arraylist.length; i++) {
+						var vzymc = arraylist[i].zymc;
+						var vqfrq = arraylist[i].qfrq;
+						var vyxqjz = arraylist[i].yxqjz;
+						var vyxqqs = arraylist[i].yxqqs;
+						innerhtml = innerhtml + "<table width='100%' align='center' class='table2' style=''><tr class='tr1'><td align='left' class='lefttd2'>专业类别</td><td align='left' class='righttd2' id='con2-zymc'>" + vzymc +
+							"</td></tr><tr class='tr1'><td align='left'class='lefttd2'>初始发证时间</td><td align='left'class='righttd2'id='con2-qfrq'>" + vqfrq +
+							"</td></tr><tr class='tr1'><td align='left'class='lefttd2'>有效期</td><td align='left'class='righttd2'id='con2-yxqz'>" + vyxqqs + "至</br>" + vyxqjz + "</td></tr></table>";
+					}
+					document.getElementById('con2-list').innerHTML = innerhtml;
+				}
+			} else if(type == 3) {
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+				document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+				document.getElementById("con3-zsmc").innerHTML = dataArray.zzname;
+				document.getElementById("con3-xm").innerHTML = dataArray.name;
+				document.getElementById("con3-xb").innerHTML = dataArray.sex;
+				document.getElementById("con3-csny").innerHTML = dataArray.csny;
+				document.getElementById("con3-qymc").innerHTML = dataArray.qymc;
+				document.getElementById("con3-zw").innerHTML = dataArray.zw;
+				vjszc = dataArray.jszc;
+				if((new RegExp("\\S+")).test(vjszc)) {
+					document.getElementById("con3-jszc").innerHTML = vjszc;
+				} else {
+					document.getElementById("con3-jszc").innerHTML = "无";
+				}
+				document.getElementById("con3-zsbh").innerHTML = dataArray.zzbh;
+				document.getElementById("con3-fzjg").innerHTML = dataArray.bzdw;
+				document.getElementById("con3-fzsj").innerHTML = dataArray.bzsj;
+				document.getElementById("con3-yxqz").innerHTML = dataArray.yxqjz;
+				var vsfzno = dataArray.sfzno;
+				document.getElementById("con3-sfzh").innerHTML = vsfzno.substring(0, 1) + "****************" + vsfzno.substring(vsfzno.length - 1, vsfzno.length);
+			}else if(type == 4) {
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "";
+				document.getElementById("content5").style.display = "none";
+				document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+				document.getElementById("con4-zsmc").innerHTML = dataArray.baseInfo.zzname;
+				document.getElementById("con4-fzjg").innerHTML = dataArray.baseInfo.fzjg;
+				document.getElementById("con4-name").innerHTML = dataArray.baseInfo.name;
+				document.getElementById("con4-xb").innerHTML = dataArray.baseInfo.sex;
+				document.getElementById("con4-birthday").innerHTML = dataArray.baseInfo.birthday;
+				document.getElementById("con4-idcard").innerHTML = dataArray.baseInfo.idcard;
+				
+				document.getElementById("con4-complany").innerHTML = dataArray.baseInfo.complany;
+				document.getElementById("con4-zymc").innerHTML = dataArray.baseInfo.zymc;
+				document.getElementById("con4-zzbh").innerHTML = dataArray.baseInfo.zzbh;
+				document.getElementById("con4-yxqqs").innerHTML = dataArray.baseInfo.yxqqs;
+				document.getElementById("con4-yxqjz").innerHTML = dataArray.baseInfo.yxqjz;
+				document.getElementById("con4-qfrq").innerHTML = dataArray.baseInfo.qfrq;
+			}else if(type == 5) {
+                //console.log("type---"+type);
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "block";
+				document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+               // console.log("display---"+dataArray.baseInfo.zzname);
+				document.getElementById("zsmc1").innerHTML = dataArray.baseInfo.zzname;
+				document.getElementById("qymc1").innerHTML = dataArray.baseInfo.qymc;
+				document.getElementById("zcdz1").innerHTML = dataArray.baseInfo.zcdz;
+				document.getElementById("yyzzh1").innerHTML = dataArray.baseInfo.uscc;
+				document.getElementById("fddbr1").innerHTML = dataArray.baseInfo.frdb;
+				document.getElementById("zczb1").innerHTML = dataArray.baseInfo.zczb + '万元';
+				document.getElementById("jjxz1").innerHTML = dataArray.baseInfo.jjxz;
+				document.getElementById("zsbh1").innerHTML = dataArray.baseInfo.zzbh;
+				//document.getElementById("yxq").innerHTML = dataArray.baseInfo.yxqjz;
+				document.getElementById("fzjg1").innerHTML = dataArray.baseInfo.bzdw;
+				document.getElementById("fzsj1").innerHTML = dataArray.baseInfo.bzsj;
+				document.getElementById("yxqqs1").innerHTML = dataArray.baseInfo.yxqqs;
+				
+				document.getElementById("yxqjz1").innerHTML = dataArray.baseInfo.yxqjz;
+                if(dataArray.majorInfo.length > 0) { //有数据
+					arraylist = [];
+					arraylist = dataArray.majorInfo;
+				} else { //无数据
+					arraylist = [];
+				}
+				if(arraylist.length > 0) { //有数据
+					var innerhtml = '';
+					for(var i = 0; i < arraylist.length; i++) {
+						var vcertlevelname = arraylist[i].zzfw;
+					
+					innerhtml = innerhtml + "<li class='textstr'>" + vcertlevelname + "</li>";
+					}
+					document.getElementById('zzxx1').innerHTML = innerhtml;
+				}
+			}
+			 else if(type == 6) {
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+				document.getElementById("content6").style.display = "block";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+				
+				document.getElementById("con6-zsmc").innerHTML = dataArray.zzname;
+				document.getElementById("con6-qymc").innerHTML = dataArray.qymc;
+				document.getElementById("con6-fddbr").innerHTML = dataArray.fdbbr;
+				document.getElementById("con6-zzfzr").innerHTML = dataArray.zzfzr;
+				document.getElementById("con6-banr").innerHTML = dataArray.banr;
+				document.getElementById("con6-zzbh").innerHTML = dataArray.zzbh;
+				document.getElementById("con6-yxqz").innerHTML = dataArray.yxqjz;
+			
+			}
+			else if(type == 9) {
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+				document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+				
+				document.getElementById("con9-zzname").innerHTML = dataArray.zzname;
+				document.getElementById("con9-bzdw").innerHTML = dataArray.bzdw;
+				document.getElementById("con9-qymc").innerHTML = dataArray.qymc;
+				document.getElementById("con9-zzbh").innerHTML = dataArray.zzbh;
+				document.getElementById("con9-yxqqs").innerHTML = dataArray.yxqqs;
+				document.getElementById("con9-yxqjz").innerHTML = dataArray.yxqjz;
+				document.getElementById("con9-jsfzr").innerHTML = dataArray.jsfzr;
+				
+				document.getElementById("con9-dwzcd").innerHTML = dataArray.dwzcd;
+				document.getElementById("con9-jjxz").innerHTML = dataArray.jjxz;
+				document.getElementById("con9-zzdj").innerHTML = dataArray.zzdj;
+				document.getElementById("con9-zczb").innerHTML = dataArray.zczb;
+				document.getElementById("con9-tyshxydm").innerHTML = dataArray.tyshxydm;
+				document.getElementById("con9-fddbr").innerHTML = dataArray.fddbr;
+			}
+			else if(type == 10) {	
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+                document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+				document.getElementById("con10-zzname").innerHTML = dataArray.baseInfo.zzname;
+				document.getElementById("con10-qymc").innerHTML = dataArray.baseInfo.qymc;
+				document.getElementById("con10-xxdz").innerHTML = dataArray.baseInfo.xxdz;
+				document.getElementById("con10-tyshxydm").innerHTML = dataArray.baseInfo.tyshxydm;
+				document.getElementById("con10-fddbr").innerHTML = dataArray.baseInfo.fddbr;
+				document.getElementById("con10-fddbrzw").innerHTML = dataArray.baseInfo.fddbrzw;
+				document.getElementById("con10-jsfzr").innerHTML = dataArray.baseInfo.jsfzr;
+				document.getElementById("con10-jsfzrzw").innerHTML = dataArray.baseInfo.jsfzrzw;
+				document.getElementById("con10-dwfzr").innerHTML = dataArray.baseInfo.dwfzr;
+				document.getElementById("con10-dwfzrzw").innerHTML = dataArray.baseInfo.dwfzrzw;
+				document.getElementById("con10-zczj").innerHTML = dataArray.baseInfo.zczj + '万元';
+                document.getElementById("con10-jjxz").innerHTML = dataArray.baseInfo.jjxz;
+				
+				  
+				document.getElementById("con10-zzbh").innerHTML = dataArray.baseInfo.zzbh;
+				document.getElementById("con10-bzdw").innerHTML = dataArray.baseInfo.bzdw;  
+				document.getElementById("con10-bzsj").innerHTML = dataArray.baseInfo.bzsj;  
+				
+				document.getElementById("con10-yxqqs").innerHTML = dataArray.baseInfo.yxqqs;  
+				document.getElementById("con10-yxqjz").innerHTML = dataArray.baseInfo.yxqjz;
+						
+				if(dataArray.majorInfo.length > 0) { //有数据
+					arraylist = [];
+					arraylist = dataArray.majorInfo;
+				} else { //无数据
+					arraylist = [];
+				}
+				if(arraylist.length > 0) { //有数据
+					var innerhtml = '';
+					for(var i = 0; i < arraylist.length; i++) {
+						var zzdj = arraylist[i];
+						innerhtml = innerhtml + "<li class='textstr'>" + zzdj + "</li>";
+					}
+					document.getElementById('con10-ywfw').innerHTML = innerhtml;
+				}
+			}
+			else if(type == 11) {	
+			
+				
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+                document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "";
+				document.getElementById("content12").style.display = "none";
+				document.getElementById("con11-zzname").innerHTML = dataArray.zzname;
+				document.getElementById("con11-qymc").innerHTML = dataArray.qymc;
+				document.getElementById("con11-zcdz").innerHTML = dataArray.zcdz;
+				document.getElementById("con11-tyshxydm").innerHTML = dataArray.tyshxydm;
+				
+				document.getElementById("con11-fddbr").innerHTML = dataArray.fddbr;
+				document.getElementById("con11-jsfzr").innerHTML = dataArray.jsfzr;
+				
+				document.getElementById("con11-jlrzzsbh").innerHTML = dataArray.jlrzzsbh;
+				document.getElementById("con11-jcfw").innerHTML = dataArray.jcfw;
+				document.getElementById("con11-zczb").innerHTML = dataArray.zczb + '万元';
+
+				document.getElementById("con11-zzbh").innerHTML = dataArray.zzbh;
+				document.getElementById("con11-bzdw").innerHTML = dataArray.bzdw;  				
+				document.getElementById("con11-yxqqs").innerHTML = dataArray.yxqqs;  
+				document.getElementById("con11-yxqjz").innerHTML = dataArray.yxqjz;
+						
+				
+			}
+			else if(type == 12 || type == 13 || type == 14 || type == 15 || type == 16) {	
+				
+				
+                document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+                document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "";
+
+				
+				document.getElementById("con12-zzname").innerHTML = dataArray.zzname;
+				document.getElementById("con12-bzdw").innerHTML = dataArray.baseInfo.bzdw;
+				document.getElementById("con12-bzsj").innerHTML = dataArray.baseInfo.bzsj;
+				document.getElementById("con12-qymc").innerHTML = dataArray.baseInfo.qymc;
+				document.getElementById("con12-tyshxydm").innerHTML = dataArray.baseInfo.tyshxydm;
+				document.getElementById("con12-zzbh").innerHTML = dataArray.baseInfo.zzbh;
+				document.getElementById("con12-yxqjz").innerHTML = dataArray.baseInfo.yxqjz;
+				document.getElementById("con12-fddbr").innerHTML = dataArray.baseInfo.fddbr;
+				document.getElementById("con12-zz_state").innerHTML = dataArray.baseInfo.zz_state;
+				document.getElementById("con12-banr").innerHTML = dataArray.baseInfo.banr;
+				document.getElementById("con12-zzfzr").innerHTML = dataArray.baseInfo.zzfzr;
+				
+			}
+
+			else if(type == 17) {
+				document.getElementById("content0").style.display = "none";
+				document.getElementById("content1").style.display = "none";
+				document.getElementById("content2").style.display = "none";
+				document.getElementById("content3").style.display = "none";
+				document.getElementById("content4").style.display = "none";
+				document.getElementById("content5").style.display = "none";
+                document.getElementById("content6").style.display = "none";
+				document.getElementById("content9").style.display = "none";
+				document.getElementById("content10").style.display = "none";
+				document.getElementById("content11").style.display = "none";
+				document.getElementById("content12").style.display = "none";
+				document.getElementById("content17").style.display = "";
+				document.getElementById("con17-zzname").innerHTML = dataArray.baseInfo.zzname;	
+				document.getElementById("con17-xm").innerHTML = dataArray.baseInfo.name;
+				var sex= dataArray.baseInfo.sex;
+				document.getElementById("con17-xb").innerHTML = sex;
+				document.getElementById("con17-csny").innerHTML = dataArray.baseInfo.birthday;
+				document.getElementById("con17-pyqy").innerHTML = dataArray.baseInfo.company_name;
+				document.getElementById("con17-zzbh").innerHTML = dataArray.baseInfo.zzbh;
+				document.getElementById("con17-fzjg").innerHTML = dataArray.baseInfo.fzjg;
+				document.getElementById("con17-sfzh").innerHTML = dataArray.baseInfo.sfzh;
+				var vidcard = dataArray.baseInfo.idcard;
+				document.getElementById("con17-sfzh").innerHTML = vidcard.substring(0, 1) + "****************" + vidcard.substring(vidcard.length - 1, vidcard.length);
+
+				if(dataArray.majorInfo.length > 0) { //有数据
+					arraylist = [];
+					arraylist = dataArray.majorInfo;
+				} else { //无数据
+					arraylist = [];
+				}
+				if(arraylist.length > 0) { //有数据
+					var innerhtml = '';
+					for(var i = 0; i < arraylist.length; i++) {
+						var vzymc = arraylist[i].zymc;
+						var bh = arraylist[i].bh;
+						var vqfrq = arraylist[i].qfrq;
+						var yxqjz = arraylist[i].yxqjz;//截止日期
+						var yxqqs = arraylist[i].yxqqs;//开始日期
+						innerhtml = innerhtml + "<table width='100%' align='center' class='table2' style=''><tr class='tr1'><td align='left' class='lefttd2'>专业类别</td><td align='left' class='righttd2' id='con2-zymc'>" + vzymc +						
+							"</td></tr><tr class='tr1'><td align='left'class='lefttd2'>专业编号</td><td align='left'class='righttd2'id='con2-qfrq'>" + bh +
+							"</td></tr><tr class='tr1'><td align='left'class='lefttd2'>初始发证时间</td><td align='left'class='righttd2'id='con2-qfrq'>" + vqfrq +
+							"</td></tr><tr class='tr1'><td align='left'class='lefttd2'>有效期</td><td align='left'class='righttd2'id='con2-yxqz'>" + yxqqs + "至</br>" + yxqjz + "</td></tr></table>";
+					}
+					document.getElementById('con17-list').innerHTML = innerhtml;
+				}
+			}
+			
+			
+		},
+		error: function(e) {
+			console.log("--error--");
+		}
+	});
+}
